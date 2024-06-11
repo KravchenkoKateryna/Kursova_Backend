@@ -27,6 +27,8 @@ class Model
         $this->fields_array = $fields_array;
     }
 
+    
+
     public static function delete_by_id($id)
     {
         Core::get()->db->delete(static::$table_name, [static::$primary_key => $id]);
@@ -57,6 +59,30 @@ class Model
         }
     }
 
+    public static function find_by_condition_with_sort($condition_accos_array, $sort, $between = null)
+    {
+        $arr = Core::get()->db->select_by_condition_with_sort(static::$table_name, '*', $condition_accos_array, $sort, $between);
+
+        if (count($arr) > 0) {
+            return $arr;
+        } else {
+            return null;
+        }
+    }
+
+    public static function search_by_title($search)
+    {
+       
+        $arr = Core::get()->db->search(static::$table_name, '*', $search);
+        
+        if (isset($arr) && count($arr) > 0) {
+            return $arr;
+        } else {
+            return null;
+        }
+ 
+    }
+
     public static function find_all()
     {
        $arr = Core::get()->db->select(static::$table_name, '*');
@@ -67,20 +93,8 @@ class Model
         }
     }
 
-    public function save()
+    public function save($is_insert=true)
     {
-        $is_insert = false;
-        $val = $this->{static::$primary_key};
-        if (!isset($val)) {
-            $is_insert = true;
-        } else {
-            $value = $this->{static::$primary_key};
-
-            if (empty($value)) {
-                $is_insert = true;
-            }
-        }
-
         if ($is_insert) {
             Core::get()->db->insert(static::$table_name, $this->fields_array);
         } else {

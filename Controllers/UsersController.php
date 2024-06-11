@@ -5,14 +5,10 @@ namespace Controllers;
 use Core\Controller;
 use Models\Users;
 use Core\Core;
+use Models\Orders;
 
 class UsersController extends Controller
 {
-    public function action_index()
-    {
-        echo 'UsersController -> action_index()';
-    }
-
     public function action_login()
     {
         if (Users::is_user_logged()) {
@@ -33,6 +29,10 @@ class UsersController extends Controller
 
     public function action_register()
     {
+        if (Users::is_user_logged()) {
+            return $this->redirect('/');
+        }
+        
         if ($this->is_post) {
             $user = Users::find_by_login($this->post->login);
             if (!empty($user)) {
@@ -74,12 +74,19 @@ class UsersController extends Controller
 
     public function action_registersuccess()
     {
+        if (Users::is_user_logged()) {
+            return $this->redirect('/');
+        }
+        
         return $this->render();
     }
 
     public function action_logout()
     {
         Users::logout_user();
+        Core::get()->session->remove('user');
+        Core::get()->session->remove('cart');
+        
         return $this->redirect('/users/login');
     }
 
@@ -105,7 +112,7 @@ class UsersController extends Controller
         } 
         Core::get()->session->set('user', Users::find_by_id($user['id']));
         
-        //return $this->redirect('/users/setting');
+        return $this->redirect('/users/setting');
     }
 
     public function action_delete($params)
@@ -131,7 +138,7 @@ class UsersController extends Controller
         Users::edit_user(
             $user['id'],
             $user['login'],
-            $user['Password'],
+            "",
             $user['firstName'],
             $user['lastName'],
             $user['phone'],
@@ -139,5 +146,26 @@ class UsersController extends Controller
         );
 
         return $this->redirect('/admin/users');
+    }
+
+    public function action_orders(){
+        $orders = Users::find_all_orders();
+        $this->template->set_param('orders', $orders);
+        return $this->render();
+    }
+
+    public function action_order($params){
+        $order = Orders::find_order_by_id($params[0]);
+
+        if (empty($order)) {
+            return $this->redirect('/users/orders');
+        }
+
+        if ($order['userId'] != Core::get()->session->get('user')['id']) {
+            return $this->redirect('/users/orders');
+        }
+
+        $this->template->set_param('order', $order);
+        return $this->render();
     }
 }

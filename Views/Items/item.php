@@ -1,3 +1,5 @@
+<script src="/js/cart.js"></script>
+
 <div class="container">
   <h1 class="text-center"><?php echo $this->title; ?></h1>
   <div class="row text-center">
@@ -14,10 +16,9 @@
       <p>Ціна: <?php echo $this->item['price']; ?> грн</p>
     </div>
     <div class="col-md-4">
-      <form action="/cart/add" method="post">
         <input type="hidden" name="id" value="<?php echo $this->item['id']; ?>">
-        <button type="submit" class="btn btn-success">Купити</button>
-      </form>
+        <button type="submit" class="btn btn-success" onclick="addToCart(<?php echo $this->item['id']; ?>)">Додати в кошик</button>
+     
     </div>
   </div>
 </div>

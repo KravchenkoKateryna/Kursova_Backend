@@ -34,12 +34,7 @@ $this->title = "Редагування події";
       <label for="event_image">Зображення</label>
       <input type="text" class="form-control" id="event_image" name="event_image" value="<?= $event["image"] ?>">
     </div>
-    <div class="form-group form-check mt-2 mb-3">
-      <input type="checkbox" class="form-check-input" id="isShow" name="isShow"
-        <?= $event["isShow"] ? 'checked' : '' ?>>
-      <label class="form-check
-        label" for="isShow">Чи показувати на сайті</label>
-    </div>
+
     <button type="submit" class="btn btn-primary">Зберегти</button>
   </form>
 </div>

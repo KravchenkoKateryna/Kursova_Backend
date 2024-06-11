@@ -2,6 +2,8 @@
   $this->title = 'Кошик';
 ?>
 
+<script src="/js/cart.js"></script>
+
 <div class="container">
   <h1>Кошик</h1>
   <div class="cart">
@@ -9,45 +11,44 @@
     <p>Кошик порожній</p>
     <?php else: ?>
     <div class="cart-table">
-      <div class="cart-table-header">
-        <div class="cart-table-header__product">Товар</div>
-        <div class="cart-table-header__quantity">Кількість</div>
-        <div class="cart-table-header__price">Ціна</div>
-        <div class="cart-table-header__total">Всього</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Товар</th>
+            <th scope="col">Кількість</th>
+            <th scope="col">Ціна</th>
+            <th scope="col">Всього</th>
+            <th scope="col">Дії</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($products as $product) : ?>
+          <tr>
+            <td><?= $product['title'] ?></td>
+            <td id="amount<?=$product['id']?>"><?= $cart[$product['id']] ?></td>
+            <td><?= $product['price'] ?> грн</td>
+            <td><?= $cart[$product['id']] * $product['price'] ?> грн</td>
+            <td>
+
+              <!-- +1 -->
+              <a onclick="addToCart(<?= $product['id'] ?>)" class="btn btn-primary">+</a>
+              <!-- -1 -->
+              <a onClick="removeFromCart(<?= $product['id'] ?>)" class="btn btn-primary">-</a>
+              <!-- Delete -->
+              <a onClick="deleteFromCart(<?= $product['id'] ?>)" class="btn btn-danger">Видалити</a>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+
+      <div class="total">
+        <p>Загальна сума: <?= $total ?> грн</p>
+        <a href="/cart/order" class="btn btn-primary">Оформити замовлення</a>
+        <a href="/cart/clear" class="btn btn-danger">Очистити кошик</a>
       </div>
-      <?php foreach ($products as $product): ?>
-      <div class="cart-table-row">
-        <div class="cart-table-row__product">
-          <a href="/product/<?php echo $product->id; ?>">
-            <img src="<?php echo $product->image; ?>" alt="<?php echo $product->name; ?>">
-            <?php echo $product->name; ?>
-          </a>
-        </div>
-        <div class="cart-table-row__quantity">
-          <form action="/cart/add" method="post">
-            <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
-            <input type="number" name="quantity" value="<?php echo $cart[$product->id]; ?>" min="1">
-            <button type="submit">Оновити</button>
-          </form>
-          <form action="/cart/remove" method="post">
-            <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
-            <input type="number" name="quantity" value="<?php echo $cart[$product->id]; ?>" min="1">
-            <button type="submit">Видалити</button>
-          </form>
-        </div>
-        <div class="cart-table-row__price"><?php echo $product->price; ?> грн</div>
-        <div class="cart-table-row__total"><?php echo $product->price * $cart[$product->id]; ?> грн</div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-    <div class="cart-total">
-      <div class="cart-total__text">Загальна сума:</div>
-      <div class="cart-total__price"><?php echo $total; ?> грн</div>
-    </div>
-    <div class="cart-buttons">
-      <a href="/cart/checkout" class="cart-buttons__checkout">Оформити замовлення</a>
-      <a href="/cart/clear" class="cart-buttons__clear">Очистити кошик</a>
     </div>
     <?php endif; ?>
+
   </div>
 </div>

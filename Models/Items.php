@@ -18,9 +18,10 @@ class Items extends Model
 {
     public static $table_name = 'items';
 
-    public static function get_items_by_category($category_id)
+    public static function get_items_by_category($category_id, $sort = 'id', $price = null)
     {
-        return self::find_by_condition(['id' => $category_id]);
+
+        return self::find_by_condition_with_sort(['category_id' => $category_id], $sort, $price);
     }
 
     public static function get_item_by_id($id)
@@ -38,7 +39,7 @@ class Items extends Model
        
         if (count($arr) > 0) {
             foreach ($arr as &$item) {
-                $item['category'] = Categories::get_category_by_id($item['id'])['title'];
+                $item['category'] = Categories::get_category_by_id($item['category_id'])['title'];
             }
             
             return $arr;

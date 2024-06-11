@@ -1,11 +1,18 @@
 <?php
   $this->title = "Події";
+
+  /** @var array $events */
 ?>
 
 <div class="container">
   <h1>Події</h1>
 
   <div class="row">
+    <div class="col-12">
+      <a href="/events/add" class="btn btn-primary">Додати подію</a>
+    </div>
+  </div>
+  <div class="row mt-2">
     <div class="col-12">
       <table class="table">
         <thead>
@@ -18,7 +25,6 @@
             <th scope="col">Місце</th>
             <th scope="col">Ціна</th>
             <th scope="col">Зображення</th>
-            <th scope="col">Відображення</th>
             <th scope="col">Дії</th>
           </tr>
         </thead>
@@ -35,12 +41,11 @@
             <td><?php echo $event['place']; ?>
             <td><?php echo $event['price']; ?>
             <td><?php echo $event['image']; ?>
-            <td><?php echo $event['isShow'] ? 'Так' : 'Ні'; ?> </td>
 
             <td>
 
-              <a href="/events/edit/<?= $event['id'] ?>" class="btn btn-primary">Редагувати</a>
-              <a href="/events/delete/<?= $event['id'] ?>" class="btn btn-danger">Видалити</a>
+              <a href="/events/edit/<?= $event['id'] ?>" class="btn btn-primary" style="width:100%;">Редагувати</a>
+              <a href="/events/delete/<?= $event['id'] ?>" class="btn btn-danger mt-1" style="width:100%;">Видалити</a>
             </td>
           </tr>
           <?php endforeach; ?>

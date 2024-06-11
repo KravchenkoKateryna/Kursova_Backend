@@ -55,6 +55,7 @@
     - [index.php](Views/Admin/index.php)
   - [Cart/](Views/Cart/)
     - [index.php](Views/Cart/index.php)
+    - [order.php](Views/Cart/order.php)
   - [Event/](Views/Event/)
     - [index.php](Views/Event/index.php)
     - [add.php](Views/Event/add.php)

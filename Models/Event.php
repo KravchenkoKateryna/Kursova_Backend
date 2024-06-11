@@ -26,37 +26,39 @@ class Event extends Model
         return self::find_all();
     }
 
-    public static function add_event($event_name, $event_date, $event_time, $event_place, $event_description)
+    public static function add_event($title, $date, $time, $place, $description, $price, $image, $isShow)
     {
         $event = new Event();
-        $event->title = $event_name;
-        $event->date = $event_date;
-        $event->time = $event_time;
-        $event->place = $event_place;
-        $event->description = $event_description;
-        $event->isShow = 1;
+        $event->title = $title;
+        $event->date = $date;
+        $event->time = $time;
+        $event->place = $place;
+        $event->description = $description;
+        $event->price = $price;
+        $event->image = $image;
+        $event->isShow = $isShow;
         $event->save();
     }
 
     public static function edit_event($id, $event_name, $event_date, $event_time, $event_place, $event_description)
     {
-        $event = self::get_event_by_id($id);
+        $event = self::find_by_id($id);
         if (!empty($event)) {
-            $event->title = $event_name;
-            $event->date = $event_date;
-            $event->time = $event_time;
-            $event->place = $event_place;
-            $event->description = $event_description;
-            $event->save();
+            $event["title"] = $event_name;
+            $event["date"] = $event_date;
+            $event["time"] = $event_time;
+            $event["place"] = $event_place;
+            $event["description"] = $event_description;
+
+            $event_obj = new Event();
+            $event_obj->set_fields_array($event);
+            $event_obj->save(false);
         }
     }
 
     public static function delete_event($id)
     {
-        $event = self::get_event_by_id($id);
-        if (!empty($event)) {
-            $event->delete();
-        }
+        return self::delete_by_id($id);
     }
 
     public static function change_show_event($id)

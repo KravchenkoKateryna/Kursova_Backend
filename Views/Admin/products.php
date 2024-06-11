@@ -2,6 +2,8 @@
   $this->title = "Панель адміністратора - Товари";
 ?>
 
+
+
 <div class="container">
   <h1>Товари</h1>
 
@@ -17,7 +19,7 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Назва</th>
-            <th scope="col">Опис</th>
+            <th scope="col" style="width: 30%;">Опис</th>
             <th scope="col">Категорія</th>
             <th scope="col">Ціна</th>
             <th scope="col">Зображення</th>
@@ -28,19 +30,22 @@
           <?php
           foreach ($products as $product) : ?>
           <tr>
+            <!-- TODO -->
             <th scope="row"><?= $product['id'] ?></th>
-            <td><span style="cursor: pointer;" onclick="editName(<?php echo $product['id'] ?>)"><span
-                  id="title<?php echo $product['id'] ?>"><?php echo $product['title']; ?></span>✏️</span>
-            <td><span style="cursor: pointer;" onclick="editDescription(<?php echo $product['id'] ?>)"><span
-                  id="description<?php echo $product['id'] ?>"><?php echo $product['description']; ?></span>✏️</span>
-            <td><span style="cursor: pointer;" onclick="editCategory(<?php echo $product['id'] ?>)"><span
-                  id="category<?php echo $product['id'] ?>"><?php echo $product['category']; ?></span>✏️</span>
-            <td><span style="cursor: pointer;" onclick="editPrice(<?php echo $product['id'] ?>)"><span
-                  id="price<?php echo $product['id'] ?>"><?php echo $product['price']; ?></span>✏️</span>
-            <td><span style="cursor: pointer;" onclick="editImage(<?php echo $product['id'] ?>)"><span
-                  id="image<?php echo $product['id'] ?>"><?php echo $product['images']; ?></span>✏️</span>
+            <td><span style="cursor: pointer;"><span
+                  id="title<?php echo $product['id'] ?>"><?php echo $product['title']; ?>
+            <td><span style="cursor: pointer; width: 30%;"><span
+                  id="description<?php echo $product['id'] ?>"><?php echo $product['description'] ; ?>
+            <td><span style="cursor: pointer;"><span
+                  id="category<?php echo $product['id'] ?>"><?php echo $product['category']; ?>
+            <td><span style="cursor: pointer;"><span
+                  id="price<?php echo $product['id'] ?>"><?php echo $product['price']; ?>
+            <td><span style="cursor: pointer;"><img src="<?php echo $product['images']; ?>"
+                  style="width: 100px; height: 100px;"> </span></td>
             <td>
-              <a href="/products/delete/<?= $product['id'] ?>" class="btn btn-danger">Видалити</a>
+              <a href="/items/edit/<?= $product['id'] ?>" class="btn btn-primary mb-2"
+                style="width: 100%;">Редагувати</a>
+              <a href="/items/delete/<?= $product['id'] ?>" class="btn btn-danger" style="width: 100%;">Видалити</a>
             </td>
           </tr>
           <?php endforeach; ?>

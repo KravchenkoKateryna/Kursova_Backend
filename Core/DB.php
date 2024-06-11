@@ -38,6 +38,17 @@ class DB
         return $where_string;
     }
 
+    public function search($table, $fields = "*", $search = null)
+    {
+        $sql = "SELECT $fields FROM $table WHERE title LIKE :search";
+        $sth = $this->pdo->prepare($sql);
+        $sth->bindValue(':search', "%$search%");
+
+         $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
     public function select($table, $fields = '*', $where = null)
     {
         if (is_array($fields)) {
@@ -52,12 +63,14 @@ class DB
         $where_string = $this->where($where);
         $sql = "SELECT $fields_string FROM $table $where_string";
         $sth = $this->pdo->prepare($sql);
+       
         if (is_array($where)) {
             foreach ($where as $key => $value) {
-                $sth->bindValue(":$key", $value);
+                $sth->bindValue(":".$key, $value);
             }
         }
         $sth->execute();
+
         return $sth->fetchAll();
     }
 
@@ -109,5 +122,29 @@ class DB
         $sth->execute();
         
         return $sth->rowCount();
+    }
+
+    public function select_by_condition_with_sort($table_name, $what, $condition_accos_array, $sort, $between){
+        $where_string = $this->where($condition_accos_array);
+        $between_string = '';
+
+        if (!empty($between['price'][0]) && !empty($between['price'][1])) {
+            $between_string = "AND price BETWEEN :price_low AND :price_high";
+        }
+        $sql = "SELECT $what FROM $table_name $where_string $between_string ORDER BY $sort ASC";
+
+        
+        $sth = $this->pdo->prepare($sql);
+        if (is_array($condition_accos_array)) {
+            foreach ($condition_accos_array as $key => $value) {
+                $sth->bindValue(":$key", $value);
+            }
+        }
+        if (!empty($between_string)) {
+            $sth->bindValue(':price_low', $between['price'][0]);
+            $sth->bindValue(':price_high', $between['price'][1]);
+        }
+        $sth->execute();
+        return $sth->fetchAll();
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jun 05, 2024 at 11:55 PM
+-- Generation Time: Jun 10, 2024 at 02:42 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -24,27 +24,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
---
-
-DROP TABLE IF EXISTS `cart`;
-CREATE TABLE IF NOT EXISTS `cart` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `userId` int NOT NULL,
-  `items` varchar(512) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -67,16 +53,16 @@ INSERT INTO `categories` (`id`, `title`) VALUES
 DROP TABLE IF EXISTS `event`;
 CREATE TABLE IF NOT EXISTS `event` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `place` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `place` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` int NOT NULL DEFAULT '0',
   `image` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `isShow` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `event`
@@ -95,20 +81,24 @@ INSERT INTO `event` (`id`, `title`, `description`, `date`, `time`, `place`, `pri
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `category_id` int NOT NULL,
   `price` int NOT NULL,
-  `images` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `images` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `items`
 --
 
 INSERT INTO `items` (`id`, `title`, `description`, `category_id`, `price`, `images`) VALUES
-(1, '101 гілка хризантеми', 'Незабутній букет із 101 гілки хризантеми \r\n\r\nЧому вибирають наші букети?\r\nПравильна температура зберігання\r\nМи зберігаємо квіти в ідеальних температурних умовах\r\nЖодної хімії при зберіганні\r\nМи не використовуємо хімію при зберіганні квітів\r\nКожен букет збирає флорист із великою любов\'ю\r\nЗібрані букети у реальному житті будуть виглядати так само, як на картинці', 1, 13620, 'https://juli.com.ua/image/cache/catalog/easyphoto/322/catalog-easyphoto-tmp-1804f973-e5c5-4950-8c2c-4dca1981be50-jpeg-1-690x800.jpeg');
+(1, '101 гілка хризантеми', 'Незабутній букет із 101 гілки хризантеми \r\n\r\nЧому вибирають наші букети?\r\nПравильна температура зберігання\r\nМи зберігаємо квіти в ідеальних температурних умовах\r\nЖодної хімії при зберіганні\r\nМи не використовуємо хімію при зберіганні квітів\r\nКожен букет збирає флорист із великою любов\'ю\r\nЗібрані букети у реальному житті будуть виглядати так само, як на картинці', 1, 13620, 'https://juli.com.ua/image/cache/catalog/easyphoto/322/catalog-easyphoto-tmp-1804f973-e5c5-4950-8c2c-4dca1981be50-jpeg-1-690x800.jpeg'),
+(2, 'Троянда червона', 'Найсвіжіші троянди від наших постачальників зроблять будь-який ваш букет ще яскравіше.', 2, 50, 'https://i.imgur.com/XXNwGDm.jpg'),
+(3, 'Послуга - пакування квітів', 'Сформуємо квіткову композицію за вашим смаком. Обирайте послугу пакування і вкажіть ваші вподобання все інше зробимо ми.', 4, 100, 'https://images.prom.ua/4398610153_w640_h640_schilnij-fakturnij-kompozitnij.jpg'),
+(4, 'Ваза для квітів скляна Bormioli Rocco 15 см Прозор', 'Ваза Capitol Bormioli Rocco має красивий вигляд як на обідньому, так і на святковому столі. Прикрасить будь-який інтер\'єр. Стильний дизайн, сучасні технології виробництва та тільки високоякісні матеріали.\r\n\r\nХарактеристики:\r\n\r\nТип: ваза для квітів\r\nЗастосування: всередині приміщення\r\nМатеріал: ударостійкого скла\r\nВисота вази: 15 см\r\nКолір: прозорий\r\nВиробник: Bormioli Rocco', 4, 169, 'https://content2.rozetka.com.ua/goods/images/big/192133828.jpg'),
+(5, 'Амариліc Celica', 'Опис (Амариліc Celica) Амариліс ( Гіппеаструм ) Celica (Амариліс Селіка)  Зовнішній вигляд Ця квітка досить висока і красива. Листки у неї зелені і до 50 см в довжину, але не широкі всього 2-3 см, розташовуються в два ряди. Вони виростають рано навесні або восени коли прохолодно, і зникають до початку літа. По закінченню літньої спеки цибулинка випускає один або два стебла-квітконоси, які доростають до 60 см. На кожному стеблі розквітають від 2 до 12 квіточок. Вони червоного кольору і махрові. Пересаджують один раз на 3-4 роки.  Довжина листя: до 50 см  Довжина стебла: до 60 см  Любить світло, не витримує надмірного зволоження.', 2, 120, 'https://florium.ua/media/catalog/product/cache/1/file/9df78eab33525d08d6e5fb8d27136e95/c/e/celica_amaryllis.jpg');
 
 -- --------------------------------------------------------
 
@@ -120,15 +110,22 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `userId` int NOT NULL,
-  `Items` text COLLATE utf8mb4_general_ci NOT NULL,
+  `Items` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `totalPrice` int NOT NULL,
   `statusId` int NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
-  `deliveryInfo` text COLLATE utf8mb4_general_ci NOT NULL,
-  `comment` text COLLATE utf8mb4_general_ci NOT NULL,
+  `delivery_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `userId`, `Items`, `totalPrice`, `statusId`, `address`, `date`, `delivery_info`, `comment`) VALUES
+(1, 1, '1', 20000, 3, 'Test address', '2024-06-03', '', '');
 
 -- --------------------------------------------------------
 
@@ -139,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 DROP TABLE IF EXISTS `orderstatuses`;
 CREATE TABLE IF NOT EXISTS `orderstatuses` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `status` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -163,10 +160,9 @@ INSERT INTO `orderstatuses` (`id`, `status`) VALUES
 DROP TABLE IF EXISTS `reviews`;
 CREATE TABLE IF NOT EXISTS `reviews` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `itemId` int NOT NULL,
   `userId` int NOT NULL,
   `rating` int NOT NULL,
-  `comment` text COLLATE utf8mb4_general_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -180,12 +176,12 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `login` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `firstName` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `lastName` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `Password` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `login` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `firstName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `lastName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
-  `phone` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
